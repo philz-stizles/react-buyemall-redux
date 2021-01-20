@@ -1,30 +1,26 @@
-import React, { Component } from 'react'
+import React from 'react'
+import { connect } from 'react-redux'
 
 import './shop.styles.css'
-import { SHOP_DATA } from './../../data/shop.data'
 import Collection from '../../components/collection/collection.component'
 
-class ShopPage extends Component {
-    constructor(props) {
-        super(props)
-        
-        this.state = {
-            collections: SHOP_DATA
-        }
-    }
+const ShopPage = ({ items }) =>  {
 
-    render() {
-        const { collections } = this.state
-        return (
-            <div>
-                { 
-                    collections.map(({id, ...rest}) => {
-                        return <Collection key={id} {...rest}/>
-                    })
-                }
-            </div>
-        )
-    }
+    return (
+        <div>
+            <h1>Collections</h1>
+            { 
+                items
+                    .map(({id, ...rest}) => {
+                    return <Collection key={id} {...rest}/>
+                })
+            }
+        </div>
+    )
 }
 
-export default ShopPage
+const mapStateToProps = ({ collection }) => ({
+    items: collection.items
+})
+
+export default connect(mapStateToProps)(ShopPage);
