@@ -1,11 +1,15 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+// Pages
 import HomePage from './pages/home/home.component';
 import ShopPage from './pages/shop/shop.component';
+import CheckoutPage from './pages/checkout/checkout.component';
 import AuthPage from './pages/auth/auth.component';
 import ContactPage from './pages/contact/contact.component';
 import DashboardPage from './pages/dashboard/dashboard.component';
+
 import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './api/firebase/firebase.utils'
 import { setLoggedInUser } from './store/redux/auth/auth.actions'
@@ -48,6 +52,7 @@ class App extends React.Component {
           <Route exact path='/sign-in' render={() => {
             return (this.props.loggedInUser) ? <Redirect to="/"/> : <AuthPage />
           }}/>
+          <Route exact path='/checkout' component={CheckoutPage}/>
           <Route path='/contact' component={ContactPage}/>
           <Route path='/dashboard' component={DashboardPage}/>
         </Switch>
