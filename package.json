@@ -1,6 +1,11 @@
 {
   "name": "react-buyemall-redux",
   "version": "0.1.0",
+  "engines": {
+    "node": "15.x",
+    "npm": "7.x",
+    "yarn": "1.x"
+  },
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.4",

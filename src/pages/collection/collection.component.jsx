@@ -5,10 +5,10 @@ import { selectCollectionItems } from '../../store/redux/collection/collection.s
 import CollectionItem from '../../components/collection-item/collection-item.component'
 import './collection.styles.css'
 
-const CollectionPage = ({ match }) => {
+const CollectionPage = ({ match, items }) => {
     return (
         <div className="collection-page">
-            <h1 className="title">{title.toUpperCase()}</h1>
+            <h1 className="title">{items.title.toUpperCase()}</h1>
             <div className="preview">
                 {
                     items
