@@ -1,9 +1,10 @@
 import React from 'react'
 import CollectionItem from '../collection-item/collection-item.component'
 import './collection-preview.styles.css'
+import { log as Logger } from './../../utils/logger.js'
 
 const CollectionPreview = ({ title, items }) => {
-    console.log(title, items)
+    Logger(title, items)
     return (
         <div className="collection-preview">
             <h1 className="title">{title.toUpperCase()}</h1>

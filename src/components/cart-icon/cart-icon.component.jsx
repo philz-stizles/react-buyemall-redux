@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import { ReactComponent as ShoppingBagSvg } from '../../assets/shopping-bag.svg'
 import { toggleCartHidden } from './../../store/redux/cart/cart.actions'
 import { selectCartItemsCount } from './../../store/redux/cart/cart.selectors'
+import { log as Logger } from './../../utils/logger.js'
 
 import './cart-icon.styles.css'
 
 const CartIcon = ({ toggleCartHidden, itemCount }) => {
 
-    console.log(itemCount)
+    Logger(itemCount)
     return (
         <div className="cart-icon" onClick={() => toggleCartHidden() }>
             <ShoppingBagSvg className="shopping-icon" />

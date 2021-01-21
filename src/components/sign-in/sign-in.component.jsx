@@ -4,6 +4,7 @@ import CustomButton from '../custom-button/custom-button.component'
 import FormInput from '../form-input/form-input.component'
 import { auth } from './../../api/firebase/firebase.utils'
 import './sign-in.styles.css'
+import { log as Logger } from './../../utils/logger.js'
 
 class SignInPage extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ class SignInPage extends Component {
             this.setState({
                 email: '',
                 password: ''
-            }, () => console.log(this.state))
+            }, () => Logger(this.state))
 
         } catch(error) {
             console.error(error)

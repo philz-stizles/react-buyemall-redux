@@ -1,6 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
+import { log as Logger } from './../../utils/logger.js'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -26,9 +27,9 @@ const createUserProfileDocument = async (userAuth, additionalData) => {
   if(!userAuth) return 
 
   const userRef = firestore.doc(`users/${userAuth.uid}`)
-  console.log(userRef)
+  Logger(userRef)
   const userSnapShot = await userRef.get()
-  console.log(userSnapShot)
+  Logger(userSnapShot)
 
   if(!userSnapShot.exists) {
     const { displayName, email } = userAuth
@@ -41,7 +42,7 @@ const createUserProfileDocument = async (userAuth, additionalData) => {
         ...additionalData
       })
     } catch(error) {
-      console.log('Error creating user', error.message)
+      Logger('Error creating user', error.message)
     }
   }
 

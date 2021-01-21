@@ -1,3 +1,5 @@
+import { log as Logger } from './../../../utils/logger'
+
 export const addItemToCart = (existingItems, payload) => {
     const existingCartItem =  existingItems.find(item => item.id === payload.id)
     if(existingCartItem) {
@@ -21,7 +23,7 @@ export const incrementCartItem = (existingItems, id) => {
 }
 
 export const decrementCartItem = (existingItems, id) => {
-    console.log(id)
+    Logger(id)
 
     const existingCartItem =  existingItems.find(item => item.id === id)
     if(existingCartItem) {

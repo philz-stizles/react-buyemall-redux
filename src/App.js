@@ -13,6 +13,7 @@ import DashboardPage from './pages/dashboard/dashboard.component';
 import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './api/firebase/firebase.utils'
 import { setLoggedInUser } from './store/redux/auth/auth.actions'
+import { log as Logger } from './utils/logger.js'
 
 import './App.css';
 
@@ -22,11 +23,11 @@ class App extends React.Component {
   componentDidMount() {
     const { setLoggedInUser } = this.props
     this.authStateUnSubscription = auth.onAuthStateChanged(async userAuth => {
-      console.log(userAuth)
+      Logger(userAuth)
       if(userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
         userRef.onSnapshot(snapShot => {
-          console.log(snapShot.data())
+          Logger(snapShot.data())
           setLoggedInUser({
             id: snapShot.id,
             ...snapShot.data()
