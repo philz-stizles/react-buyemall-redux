@@ -51,13 +51,13 @@ class SignInPage extends Component {
                 <span>Sign in with your email amd password</span>
 
                 <form onSubmit={this.handleSubmit}>
-                    <FormInput name="email" value={email} handleChange={this.handleChange}
+                    <FormInput id="email" name="email" value={email} handleChange={this.handleChange}
                         label="Email" type="email" required/>
-                    <FormInput name="password" type="password" value={password} handleChange={this.handleChange} 
+                    <FormInput id="password" name="password" type="password" value={password} handleChange={this.handleChange} 
                         label="Password" required/>
                     <div className="buttons">
                         <CustomButton type="submit">Sign In</CustomButton>
-                        <CustomButton isGoogleSignIn type="button" onClick={signInWithGoogle}>Sign in with Google</CustomButton>
+                        <CustomButton isGoogleSignIn onClick={signInWithGoogle}>Sign in with Google</CustomButton>
                     </div>
                 </form>
             </div>

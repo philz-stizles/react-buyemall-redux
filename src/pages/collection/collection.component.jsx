@@ -1,15 +1,16 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { createStructuredSelector } from 'reselect'
-import { selectCollectionItems } from '../../store/redux/collection/collection.selectors'
+import { selectCollection } from '../../store/redux/collection/collection.selectors'
 import CollectionItem from '../../components/collection-item/collection-item.component'
-import './collection.styles.css'
+import { CollectionPageContainer } from './collection.styles'
 
-const CollectionPage = ({ match, items }) => {
+const CollectionPage = ({ collection }) => {
+    console.log(collection)
+    const { title, items } = collection
     return (
-        <div className="collection-page">
-            <h1 className="title">{items.title.toUpperCase()}</h1>
-            <div className="preview">
+        <CollectionPageContainer>
+            <h1 className="title">{title.toUpperCase()}</h1>
+            <div className="items">
                 {
                     items
                         .filter((item, i) => i < 4)
@@ -18,12 +19,12 @@ const CollectionPage = ({ match, items }) => {
                     })
                 }
             </div>
-        </div>
+        </CollectionPageContainer>
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    items: selectCollectionItems
+const mapStateToProps = (state, ownProps) => ({
+    collection: selectCollection(ownProps.match.params.collectionId)(state)
 })
 
 export default connect(mapStateToProps)(CollectionPage)

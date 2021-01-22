@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
+import { selectCollections } from './store/redux/collection/collection.selectors'
 
 // Pages
 import HomePage from './pages/home/home.component';
@@ -36,6 +37,7 @@ class App extends React.Component {
       } 
       
       setLoggedInUser(userAuth)
+      // addCollectionAndDocuments('collection', collections)
     })
   }
 
@@ -66,8 +68,9 @@ const mapDispatchToProps = dispatch => ({
   setLoggedInUser: user => dispatch(setLoggedInUser(user))
 })
 
-const mapStateToProps = ({ auth }) => ({
-  loggedInUser: auth.loggedInUser
+const mapStateToProps = (state) => ({
+  loggedInUser: state.auth.loggedInUser,
+  collections: selectCollections(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
