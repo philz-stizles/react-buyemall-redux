@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { selectCollections } from './store/redux/collection/collection.selectors'
+// import { selectCollections } from './store/redux/collection/collection.selectors'
 
 // Pages
 import HomePage from './pages/home/home.component';
@@ -13,8 +13,10 @@ import DashboardPage from './pages/dashboard/dashboard.component';
 
 import Header from './components/header/header.component';
 import { auth, createUserProfileDocument } from './api/firebase/firebase.utils'
+// import { auth, createUserProfileDocument, addCollectionAndDocuments } from './api/firebase/firebase.utils'
 import { setLoggedInUser } from './store/redux/auth/auth.actions'
 import { log as Logger } from './utils/logger.js'
+// import { selectCollectionsAsArray } from './store/redux/collection/collection.selectors'
 
 import './App.css';
 
@@ -23,6 +25,7 @@ class App extends React.Component {
 
   componentDidMount() {
     const { setLoggedInUser } = this.props
+    // const { setLoggedInUser, collections } = this.props
     this.authStateUnSubscription = auth.onAuthStateChanged(async userAuth => {
       Logger(userAuth)
       if(userAuth) {
@@ -37,7 +40,7 @@ class App extends React.Component {
       } 
       
       setLoggedInUser(userAuth)
-      // addCollectionAndDocuments('collection', collections)
+      // addCollectionAndDocuments('collections', collections.map(({title, items}) => { title, items }))
     })
   }
 
@@ -51,7 +54,8 @@ class App extends React.Component {
         <Header />
         <Switch>
           <Route exact path='/' component={HomePage}/>
-          <Route path='/shop' component={ShopPage}/>
+          {/* Route below has a component with nested Routes, do not put the exact */}
+          <Route path='/shop' component={ShopPage}/>  
           <Route exact path='/sign-in' render={() => {
             return (this.props.loggedInUser) ? <Redirect to="/"/> : <AuthPage />
           }}/>
@@ -70,7 +74,7 @@ const mapDispatchToProps = dispatch => ({
 
 const mapStateToProps = (state) => ({
   loggedInUser: state.auth.loggedInUser,
-  collections: selectCollections(state)
+  // collections: selectCollectionsAsArray(state)
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

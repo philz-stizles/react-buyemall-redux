@@ -10,25 +10,27 @@ const collectionReducer = state => state.collection
 //     mens: 5
 // }
 
-export const selectCollectionsAsArray = createSelector(
-    [collectionReducer],
-    (collectionReducer) => Object.keys(collectionReducer.items).map(key => {
-        const collection = collectionReducer.items[key]
-        return {
-            id: collection.id,
-            title: collection.title,
-            routeName: collection.routeName,
-            items: collection.items
-        }
-    } )
-)
-
 export const selectCollections = createSelector(
     [collectionReducer],
     (collectionReducer) => collectionReducer.items
 )
 
+export const selectCollectionsAsArray = createSelector(
+    [selectCollections],
+    (items) =>  items ? Object.keys(items).map(key => items[key]) : []
+)
+
 export const selectCollection = collectionUrlParam => createSelector(
     [selectCollections],
-    collections => collections[collectionUrlParam]
+    collections => ((collections) ? collections[collectionUrlParam] : null)
+)
+
+export const selectIsCollectionFetching = createSelector(
+    [collectionReducer],
+    collectionReducer => collectionReducer.isFetching
+)
+
+export const selectIsCollectionLoaded = createSelector(
+    [collectionReducer],
+    collectionReducer => !!collectionReducer.items
 )

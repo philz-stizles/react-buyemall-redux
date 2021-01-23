@@ -5,12 +5,12 @@ import { log as Logger } from './../../utils/logger.js'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBFl7EoYEm4-ShideBuzO4lPUyz50ICmY0",
-  authDomain: "buyemall.firebaseapp.com",
-  projectId: "buyemall",
-  storageBucket: "buyemall.appspot.com",
-  messagingSenderId: "939412060969",
-  appId: "1:939412060969:web:4193b890f1c9cd336a1538"
+  apiKey: "AIzaSyBeNuQmVCBymp-UNtW5LoTdim-d9spAh4Q",
+    authDomain: "kadysgiftcorner-c54da.firebaseapp.com",
+    projectId: "kadysgiftcorner-c54da",
+    storageBucket: "kadysgiftcorner-c54da.appspot.com",
+    messagingSenderId: "997868317303",
+    appId: "1:997868317303:web:3f3603aca1c4a93d717472"
 }
 
 // Initialize Firebase
@@ -65,4 +65,31 @@ const addCollectionAndDocuments = async (key, data) => {
   return await batch.commit()
 }
 
-export { firebase, auth, firestore, signInWithGoogle, createUserProfileDocument, addCollectionAndDocuments }
+const convertCollectionsSnapshotToMap = (snapshot) => {
+  const transformedCollection = snapshot.docs.map(doc => {
+    const { title, items } = doc.data()
+
+    return {
+      id: doc.id,
+      routeName: encodeURI(title),
+      title,
+      items
+    }
+  })
+
+  return transformedCollection.reduce((accumulator, collection) => {
+    const {title} = collection
+    accumulator[title.toLowerCase()] = collection
+    return accumulator
+  }, {})
+}
+
+export { 
+  firebase, 
+  auth, 
+  firestore, 
+  signInWithGoogle, 
+  createUserProfileDocument, 
+  addCollectionAndDocuments, 
+  convertCollectionsSnapshotToMap 
+}
