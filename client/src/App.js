@@ -1,29 +1,28 @@
-import React from 'react';
+import React, { useEffect } from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { selectCollections } from './store/redux/collection/collection.selectors'
+import { auth, createUserProfileDocument } from './api/firebase/firebase.utils'
 
 // Pages
-import HomePage from './pages/home/home.component';
-import ShopPage from './pages/shop/shop.component';
-import CheckoutPage from './pages/checkout/checkout.component';
-import AuthPage from './pages/auth/auth.component';
-import ContactPage from './pages/contact/contact.component';
-import DashboardPage from './pages/dashboard/dashboard.component';
+import HomePage from './pages/home/home.component'
+import ShopPage from './pages/shop/shop.component'
+import CheckoutPage from './pages/checkout/checkout.component'
+import AuthPage from './pages/auth/auth.component'
+import ContactPage from './pages/contact/contact.component'
+import DashboardPage from './pages/dashboard/dashboard.component'
 
-import Header from './components/header/header.component';
-import { auth, createUserProfileDocument } from './api/firebase/firebase.utils'
+import Header from './components/header/header.component'
 import { setLoggedInUser } from './store/redux/auth/auth.actions'
 import { log as Logger } from './utils/logger.js'
 
 import './App.css';
 
-class App extends React.Component {
-  authStateUnSubscription = null
+const App = ({ loggedInUser, setLoggedInUser }) => {
 
-  componentDidMount() {
-    const { setLoggedInUser } = this.props
-    this.authStateUnSubscription = auth.onAuthStateChanged(async userAuth => {
+  // UseEffect as ComponentDidMount & componentWillUnmount
+  useEffect(() => {
+    let authStateUnSubscription = null
+    authStateUnSubscription = auth.onAuthStateChanged(async userAuth => {
       Logger(userAuth)
       if(userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
@@ -37,40 +36,36 @@ class App extends React.Component {
       } 
       
       setLoggedInUser(userAuth)
-      // addCollectionAndDocuments('collection', collections)
+
+      return function cleanup() {
+        authStateUnSubscription()
+      };
     })
-  }
+  }, [setLoggedInUser])
 
-  componentWillUnmount() {
-    this.authStateUnSubscription()
-  }
-
-  render() {
-    return (
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path='/' component={HomePage}/>
-          <Route path='/shop' component={ShopPage}/>
-          <Route exact path='/sign-in' render={() => {
-            return (this.props.loggedInUser) ? <Redirect to="/"/> : <AuthPage />
-          }}/>
-          <Route exact path='/checkout' component={CheckoutPage}/>
-          <Route path='/contact' component={ContactPage}/>
-          <Route path='/dashboard' component={DashboardPage}/>
-        </Switch>
-      </div>
-    )
-  }
+  return (
+    <div>
+      <Header />
+      <Switch>
+        <Route exact path='/' component={HomePage}/>
+        <Route path='/shop' component={ShopPage}/>
+        <Route exact path='/sign-in' render={() => {
+          return (loggedInUser) ? <Redirect to="/"/> : <AuthPage />
+        }}/>
+        <Route exact path='/checkout' component={CheckoutPage}/>
+        <Route path='/contact' component={ContactPage}/>
+        <Route path='/dashboard' component={DashboardPage}/>
+      </Switch>
+    </div>
+  )
 }
 
 const mapDispatchToProps = dispatch => ({
-  setLoggedInUser: user => dispatch(setLoggedInUser(user))
+  setLoggedInUser: () => dispatch(setLoggedInUser())
 })
 
 const mapStateToProps = (state) => ({
-  loggedInUser: state.auth.loggedInUser,
-  collections: selectCollections(state)
+  loggedInUser: state.auth.loggedInUser
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

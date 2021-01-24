@@ -1,7 +1,7 @@
 import React from 'react'
 import CollectionItem from '../collection-item/collection-item.component'
 import './collection-preview.styles.css'
-import { log as Logger } from './../../utils/logger.js'
+import { log as Logger } from '../../utils/logger.js'
 
 const CollectionPreview = ({ title, items }) => {
     Logger(title, items)

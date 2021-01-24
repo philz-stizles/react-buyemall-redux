@@ -1,7 +1,7 @@
 import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
-import { log as Logger } from './../../utils/logger.js'
+import { log as Logger } from '../../utils/logger.js'
 
 // Your web app's Firebase configuration
 const firebaseConfig = {

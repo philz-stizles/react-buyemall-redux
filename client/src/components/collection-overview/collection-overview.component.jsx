@@ -4,7 +4,7 @@ import { createStructuredSelector } from 'reselect'
 import { selectCollectionsAsArray } from '../../store/redux/collection/collection.selectors'
 import CollectionPreview from '../collection-preview/collection-preview.component'
 import './collection-overview.styles.css'
-import { log as Logger } from './../../utils/logger.js'
+import { log as Logger } from '../../utils/logger.js'
 
 const CollectionOverview = ({ items }) => {
     Logger(items)

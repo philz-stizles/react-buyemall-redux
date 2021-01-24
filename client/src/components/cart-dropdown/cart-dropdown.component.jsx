@@ -4,11 +4,11 @@ import { withRouter } from 'react-router-dom'
 
 // Components
 import CartItem from '../cart-item/cart-item.component'
-import CustomButton from './../custom-button/custom-button.component'
+import CustomButton from '../custom-button/custom-button.component'
 
 // Redux Store
-import { selectCartItems } from './../../store/redux/cart/cart.selectors'
-import { toggleCartHidden } from './../../store/redux/cart/cart.actions'
+import { selectCartItems } from '../../store/redux/cart/cart.selectors'
+import { toggleCartHidden } from '../../store/redux/cart/cart.actions'
 
 // Styles
 import './cart-dropdown.styles.css'

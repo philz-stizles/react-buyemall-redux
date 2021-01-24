@@ -1,12 +1,12 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { createStructuredSelector } from 'reselect'
-import { auth } from './../../api/firebase/firebase.utils'
+import { auth } from '../../api/firebase/firebase.utils'
 import { ReactComponent as Logo } from '../../assets/crown.svg'
-import CartIcon from './../cart-icon/cart-icon.component'
-import CartDropdown from './../cart-dropdown/cart-dropdown.component'
-import { selectLoggedInUser } from './../../store/redux/auth/auth.selectors'
-import { selectCartHidden } from './../../store/redux/cart/cart.selectors'
+import CartIcon from '../cart-icon/cart-icon.component'
+import CartDropdown from '../cart-dropdown/cart-dropdown.component'
+import { selectLoggedInUser } from '../../store/redux/auth/auth.selectors'
+import { selectCartHidden } from '../../store/redux/cart/cart.selectors'
 import { HeaderContainer, LogoContainer, OptionLink, OptionsContainer } from './header.styles'
 
 const Header = ({ loggedInUser, hidden }) => {

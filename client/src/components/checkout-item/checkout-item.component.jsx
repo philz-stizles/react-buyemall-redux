@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { removeFromCart, incrementCartItem, decrementCartItem } from './../../store/redux/cart/cart.actions'
+import { removeFromCart, incrementCartItem, decrementCartItem } from '../../store/redux/cart/cart.actions'
 
 import './checkout-item.styles.css'
 
