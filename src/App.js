@@ -19,10 +19,9 @@ import './App.css';
 
 const App = ({ loggedInUser, setLoggedInUser }) => {
 
-  // UseEffect as ComponentDidMount & componentWillUnmount
+  // UseEffect as ComponentDidMount with ComponentWillUnmount
   useEffect(() => {
-    let authStateUnSubscription = null
-    authStateUnSubscription = auth.onAuthStateChanged(async userAuth => {
+    const authStateUnSubscription = auth.onAuthStateChanged(async userAuth => {
       Logger(userAuth)
       if(userAuth) {
         const userRef = await createUserProfileDocument(userAuth)
