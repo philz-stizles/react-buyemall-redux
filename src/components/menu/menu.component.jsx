@@ -1,10 +1,11 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useContext } from 'react'
 import MenuItem from '../menu-item/menu-item.component'
+import MenuContext from './../../store/contexts/menu/menu.context'
 
 import './menu.styles.css'
 
-const Menu = ({ items }) => {
+const Menu = () => {
+    const items = useContext(MenuContext)
     return (
         <div className="menu">
             {
@@ -16,8 +17,5 @@ const Menu = ({ items }) => {
     )
 }
 
-const mapStateToProps = ({ menu }) => ({
-    items: menu.items
-})
 
-export default connect(mapStateToProps)( Menu);
+export default Menu

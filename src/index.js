@@ -8,17 +8,20 @@ import App from './App';
 import * as serviceWorkerRegistration from './serviceWorkerRegistration';
 import reportWebVitals from './reportWebVitals';
 import { store, persistor } from './store/redux/store'
+import CartProvider from './store/contexts/cart/cart.provider';
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <Router>
-        <PersistGate persistor={persistor}>
-          <App />
-        </PersistGate>
-      </Router>
-    </React.StrictMode>
-  </Provider>,
+  <CartProvider>
+    <Provider store={store}>
+      <React.StrictMode>
+        <Router>
+          <PersistGate persistor={persistor}>
+            <App />
+          </PersistGate>
+        </Router>
+      </React.StrictMode>
+    </Provider>
+  </CartProvider>,
   document.getElementById('root')
 );
 

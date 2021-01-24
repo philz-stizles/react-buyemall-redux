@@ -1,1 +1,0 @@
-export const SET_LOGGGED_IN_USER = 'SET_LOGGGED_IN_USER'

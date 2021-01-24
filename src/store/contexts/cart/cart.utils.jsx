@@ -1,4 +1,4 @@
-import { log as Logger } from './../../../utils/logger'
+import { log as Logger } from '../../../utils/logger'
 
 export const addItemToCart = (existingItems, payload) => {
     const existingCartItem =  existingItems.find(item => item.id === payload.id)
@@ -36,4 +36,12 @@ export const decrementCartItem = (existingItems, id) => {
     }
 
     return existingItems
+}
+
+export const getItemsCount = (items) => {
+    return items.reduce((accumulator, item) => accumulator + item.count, 0)
+}
+
+export const getTotalPrice = (items) => {
+    return items.reduce((accumulator, item) => accumulator + (item.count * item.price), 0)
 }

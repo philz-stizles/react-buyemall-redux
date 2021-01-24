@@ -1,5 +1,4 @@
-import { UPDATE_COLLECTIONS, FETCH_COLLECTIONS_START, FETCH_COLLECTIONS_SUCCESS, FETCH_COLLECTIONS_FAILURE } from './collection.types'
-// import { SHOP_DATA } from './../../../data/shop.data.object'
+import { FETCH_COLLECTIONS_START, FETCH_COLLECTIONS_SUCCESS, FETCH_COLLECTIONS_FAILURE } from './collection.types'
 
 const INITIAL_STATE = {
     // items: SHOP_DATA,
@@ -11,11 +10,6 @@ const INITIAL_STATE = {
 const collectionReducer = (state = INITIAL_STATE, action) => {
     const { type, payload } = action
     switch(type) {
-        // case UPDATE_COLLECTIONS:
-        //     return {
-        //         ...state,
-        //         items: payload
-        //     }
         case FETCH_COLLECTIONS_START:
             return {
                 ...state,

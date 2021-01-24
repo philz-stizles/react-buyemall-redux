@@ -1,34 +1,19 @@
-import React from 'react'
-import { connect } from 'react-redux'
+import React, { useContext } from 'react'
 import { ReactComponent as ShoppingBagSvg } from '../../assets/shopping-bag.svg'
-import { toggleCartHidden } from './../../store/redux/cart/cart.actions'
-import { selectCartItemsCount } from './../../store/redux/cart/cart.selectors'
 import { log as Logger } from './../../utils/logger.js'
+import { CartContext } from './../../store/contexts/cart/cart.provider'
+import { CartIconContainer } from './cart-icon.styles.jsx'
 
-import './cart-icon.styles.css'
-
-const CartIcon = ({ toggleCartHidden, itemCount }) => {
-
+const CartIcon = ({ itemCount }) => {
+    const { toggleCartHidden, itemsCount } = useContext(CartContext)
     Logger(itemCount)
     return (
-        <div className="cart-icon" onClick={() => toggleCartHidden() }>
+        <CartIconContainer onClick={() => toggleCartHidden() }>
             <ShoppingBagSvg className="shopping-icon" />
-            <span className="item-count"> {itemCount} </span>
-        </div>
+            <span className="item-count"> {itemsCount} </span>
+        </CartIconContainer>
     )
 }
 
-// const mapStateToProps = ({ cart }) => ({
-//     itemCount: cart.items.reduce((accumulator, item) => accumulator + item.count, 0)
-// })
 
-const mapStateToProps = state => ({
-    itemCount: selectCartItemsCount(state)
-})
-
-const mapDispatchToProps = dispatch => ({
-    toggleCartHidden: () => dispatch(toggleCartHidden())
-})
-
-
-export default connect(mapStateToProps, mapDispatchToProps)(CartIcon);
+export default CartIcon

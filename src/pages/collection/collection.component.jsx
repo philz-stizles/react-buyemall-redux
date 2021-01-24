@@ -1,11 +1,14 @@
-import React from 'react'
-import { connect } from 'react-redux'
-import { selectCollection } from '../../store/redux/collection/collection.selectors'
+import React, {useContext} from 'react'
 import CollectionItem from '../../components/collection-item/collection-item.component'
 import { CollectionPageContainer } from './collection.styles'
 
-const CollectionPage = ({ collection }) => {
-    console.log(collection)
+import CollectionsContext from './../../store/contexts/collections/collections.context'
+
+// ************ USING CONTEXT ************
+// **********      Method 1    ***********
+const CollectionPage = ({ match }) => {
+    const collectionsContext = useContext(CollectionsContext)
+    const collection = collectionsContext[match.params.collectionId]
     const { title, items } = collection
     return (
         <CollectionPageContainer>
@@ -23,10 +26,34 @@ const CollectionPage = ({ collection }) => {
     )
 }
 
-const mapStateToProps = (state, ownProps) => ({
-    collection: selectCollection(ownProps.match.params.collectionId)(state)
-})
+export default CollectionPage
 
-export default connect(mapStateToProps)(CollectionPage)
+
+// ********** Method 2 ************
+// const CollectionPage = ({ match }) => {
+//     return (
+//         <CollectionsContext.Consumer>
+//             {
+//                 collections => {
+//                     const collection = collections[match.params.collectionId]
+//                     const { title, items} = collection
+//                     return (
+//                         <CollectionPageContainer>
+//                             <h1 className="title">{title.toUpperCase()}</h1>
+//                             <div className="items">
+//                             {
+//                                 items.filter((item, i) => i < 4)
+//                                     .map(item => <CollectionItem key={item.id} item={item} />)
+//                             }
+//                             </div>
+//                         </CollectionPageContainer>
+//                     )
+//                 }
+//             }
+//         </CollectionsContext.Consumer>
+//     )
+// }
+
+// export default CollectionPage
 
 
