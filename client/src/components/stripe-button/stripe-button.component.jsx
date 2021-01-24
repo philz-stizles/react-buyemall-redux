@@ -8,7 +8,7 @@ const StripeCheckoutButton = ({ price }) => {
 
     const onToken = token => {
         console.log(token)
-        alert('Payment successful')
+        // alert('Payment successful')
         axios({
             url: 'payment',
             method: 'POST',
