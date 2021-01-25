@@ -15,7 +15,7 @@ import Header from './components/header/header.component'
 import { setLoggedInUser } from './store/redux/auth/auth.actions'
 import { log as Logger } from './utils/logger.js'
 
-import './App.css';
+import { GlobalStyles } from './global.styles';
 
 const App = ({ loggedInUser, setLoggedInUser }) => {
 
@@ -44,6 +44,7 @@ const App = ({ loggedInUser, setLoggedInUser }) => {
 
   return (
     <div>
+      <GlobalStyles />
       <Header />
       <Switch>
         <Route exact path='/' component={HomePage}/>

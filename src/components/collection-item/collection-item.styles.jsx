@@ -8,24 +8,27 @@ export const CollectionItemContainer = styled.div`
     height: 350px;
     align-items: center;
     position: relative;
+
     &:hover {
         .image {
-        opacity: 0.8;
+            opacity: 0.8;
         }
+
         button {
-        opacity: 0.85;
-        display: flex;
+            opacity: 0.85;
+            display: flex;
         }
     }
+
     @media screen and (max-width: 800px) {
         width: 40vw;
         &:hover {
-        .image {
-            opacity: unset;
-        }
-        button {
-            opacity: unset;
-        }
+            .image {
+                opacity: unset;
+            }
+            button {
+                opacity: unset;
+            }
         }
     }
 `
@@ -36,6 +39,7 @@ export const AddButton = styled(CustomButton)`
     position: absolute;
     top: 255px;
     display: none;
+
     @media screen and (max-width: 800px) {
         display: block;
         opacity: 0.9;
@@ -68,14 +72,14 @@ export const CollectionFooterContainer = styled.div`
 CollectionFooterContainer.displayName = 'CollectionFooterContainer';
 
 export const NameContainer = styled.span`
-    width: 90%;
+    width: 80%;
     margin-bottom: 15px;
 `
 
 NameContainer.displayName = 'NameContainer';
 
 export const PriceContainer = styled.span`
-    width: 10%;
+    width: 20%;
     text-align: right;
 `
 

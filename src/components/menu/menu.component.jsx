@@ -2,17 +2,17 @@ import React from 'react'
 import { connect } from 'react-redux'
 import MenuItem from '../menu-item/menu-item.component'
 
-import './menu.styles.css'
+import { MenuContainer } from './menu.styles'
 
 const Menu = ({ items }) => {
     return (
-        <div className="menu">
+        <MenuContainer>
             {
                 items.map(item => {
                     return <MenuItem key={item.id} {...item} />
                 })
             }
-        </div>
+        </MenuContainer>
     )
 }
 
