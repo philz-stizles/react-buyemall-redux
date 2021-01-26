@@ -1,7 +1,11 @@
 const expressServer = require('express')
+var enforce = require('express-sslify');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
+const { graphqlHTTP } = require('express-graphql');
+const { buildSchema } = require('graphql');
+let COLLECTION_DATA = require('./data')
 
 if(process.env.NODE_ENV !== 'production') require('dotenv').config() // Ensure to add .env to .gitignore so
 // to ensure that you never send any sensitive info
@@ -16,21 +20,16 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cors())
 
 if(process.env.NODE_ENV === 'production') {
+    // run compression and enforce https in the production
+    app.use(compression);
+    app.use(enforce.HTTPS({ trustProtoHeader: true }));
+
     app.use(expressServer.static(path.join(__dirname, 'client/build')))
 
     app.get('*', (req, res) => {
         res.sendFile(path.join(__dirname, 'client/build', 'index.html'))
     })
 }
-
-const port = process.env.PORT || 5000    // Ensure to configure proxy within the client app
-// inside package.json => http://localhost:5000
-
-app.listen(port, error => {
-    if (error) throw error
-
-    console.log(`Server running on port ${port}`)
-})
 
 app.post('/payment', (req, res) => {
     const body = {
@@ -51,3 +50,76 @@ app.post('/payment', (req, res) => {
         }
     })
 })
+
+// GraphQL schema
+var schema = buildSchema(`
+    type Query {
+        collections(name: String): [Collection]
+        collectionById(id: Int!): Collection
+        collectionByTitle(title: String!): Collection
+    },
+    type Mutation {
+        addCollection(title: String!, routeName: String): Collection
+        editCollection(id: Int!, title: String, routeName: String): Collection
+        deleteCollection(id: Int!): DeleteResponse
+    },
+    type Collection {
+        id: Int
+        title: String
+        routeName: String
+        items: [Item]
+    },
+    type Item {
+        id: Int
+        name: String
+        imageUrl: String
+        price: Float
+    },
+    type DeleteResponse {
+        ok: Boolean!
+    }
+`);
+
+
+// Root resolver
+var root = {
+    collectionById: ({id}) => {
+        return COLLECTION_DATA.filter(item => item.id === id)[0]
+    },
+    collectionByTitle: ({title}) => {
+        return COLLECTION_DATA.filter(item => item.title.toLowerCase() === title.toLowerCase())[0]
+    },
+    collections: ({name}) => {
+        if(!name) return COLLECTION_DATA
+
+        return COLLECTION_DATA.filter(item => item.name === name)
+    },
+    addCollection: ({title, routeName}) => {
+        COLLECTION_DATA = [ ...COLLECTION_DATA.filter(item => item.id !== id)]
+        return {
+            ok: true
+        }
+    },
+    deleteCollection: ({id}) => {
+        COLLECTION_DATA = [ ...COLLECTION_DATA.filter(item => item.id !== id)]
+        return {
+            ok: true
+        }
+    }
+};
+
+// Create a GraphQL endpoint
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    rootValue: root,
+    graphiql: true
+}));
+
+const port = process.env.PORT || 4000    // Ensure to configure proxy within the client app
+// inside package.json => http://localhost:4000
+
+app.listen(port, error => {
+    if (error) throw error
+    console.log('Express + GraphQL Server Now Running On localhost:4000/graphql')
+});
+

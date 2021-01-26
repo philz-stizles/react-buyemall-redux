@@ -11,7 +11,7 @@ import AuthPage from './pages/auth/auth.component'
 import ContactPage from './pages/contact/contact.component'
 import DashboardPage from './pages/dashboard/dashboard.component'
 
-import Header from './components/header/header.component'
+import { default as Header } from './components/header/header.container'
 import { setLoggedInUser } from './store/redux/auth/auth.actions'
 import { log as Logger } from './utils/logger.js'
 
