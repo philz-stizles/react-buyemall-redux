@@ -19,6 +19,8 @@ const ShopPage = ({fetchCollectionsAsync, match, isCollectionFetching, isCollect
         fetchCollectionsAsync()
     }, [fetchCollectionsAsync])
 
+    // throw Error
+
     return (
         <div className="shop-page">
             <Route exact path={`${match.path}`} render={(props) => (

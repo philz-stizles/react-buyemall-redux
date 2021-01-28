@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Sign up Component correctly set state onchange 1`] = `undefined`;
+
+exports[`Sign up Component should render SignUpPage with given state 1`] = `ShallowWrapper {}`;
+
+exports[`Sign up Component should render SignUpPage with given state 2`] = `ShallowWrapper {}`;

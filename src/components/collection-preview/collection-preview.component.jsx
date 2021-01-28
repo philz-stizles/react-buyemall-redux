@@ -21,6 +21,9 @@ const CollectionPreview = ({ title, items }) => {
     )
 }
 
-export default CollectionPreview
+export default React.memo(CollectionPreview) // React.memo() can be used on both Function and Class Components
+// Component will not re-render if none of its props change
+// React.memo() comes with the cost of an increase initial render time compared to when its not used
+// Do not memoize Components that do not take props
 
 
