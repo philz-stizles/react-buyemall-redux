@@ -1,5 +1,6 @@
 const expressServer = require('express')
-var enforce = require('express-sslify');
+const compression = require('compression')
+const enforce = require('express-sslify');
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const path = require('path')
@@ -21,7 +22,7 @@ app.use(cors())
 
 if(process.env.NODE_ENV === 'production') {
     // run compression and enforce https in the production
-    app.use(compression);
+    app.use(compression());
     app.use(enforce.HTTPS({ trustProtoHeader: true }));
 
     app.use(expressServer.static(path.join(__dirname, 'client/build')))
