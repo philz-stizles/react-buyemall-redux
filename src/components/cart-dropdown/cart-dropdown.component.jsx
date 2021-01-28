@@ -11,11 +11,11 @@ import { selectCartItems } from './../../store/redux/cart/cart.selectors'
 import { toggleCartHidden } from './../../store/redux/cart/cart.actions'
 
 // Styles
-import './cart-dropdown.styles.css'
+import './cart-dropdown.styles'
 
 const CartDropdown = ({ items, history, dispatch }) => {
     return (
-        <div className="cart-dropdown">
+        <CartDropdownContainer>
             <div className="cart-items">
                 { 
                     (items.length)
@@ -29,7 +29,7 @@ const CartDropdown = ({ items, history, dispatch }) => {
                 dispatch(toggleCartHidden())
                 history.push('/checkout')
             }}>GO TO CHECKOUT</CustomButton>
-        </div>
+        </CartDropdownContainer>
     )
 }
 
